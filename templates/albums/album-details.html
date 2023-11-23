@@ -12,7 +12,7 @@
                 <h1>Name: {{ album.name }}</h1>
                 <h4>Price: ${{ album.price }}</h4>
                 <h4>Songs:
-                {% for song in album.songs %}
+                {% for song in songs %}
                     <span>{{ song.name }}</span>
                     {% if not forloop.last %} | {% endif %}
                 {% endfor %} </h4>

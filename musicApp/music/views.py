@@ -38,10 +38,12 @@ def create_album(request):
 
 
 def album_details(request, album_id):
-    album = Album.objects.filter(pk=album_id).get()
+    album = Album.objects.prefetch_related('song_set').filter(pk=album_id).get()
+    songs = album.song_set.all()
 
     context = {
         'album': album,
+        'songs': songs
     }
 
     return render(request, 'albums/album-details.html', context)
@@ -93,6 +95,15 @@ def create_song(request):
 
 
         if form.is_valid():
+            song_name = form.cleaned_data['song_name']
+            album_id = form.cleaned_data['album']
+
+            # Get the Album object
+            album = Album.objects.get(pk=album_id)
+
+            # Create a new Song object
+            song = Song(name=song_name, album=album)
+            song.save()
 
             return redirect('index')
 

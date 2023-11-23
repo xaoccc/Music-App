@@ -20,10 +20,10 @@
             <a href="{% url 'index' %}">Home</a>
             <ul>
                 <li>
-                    <a href="album/create/">Create Album</a>
+                    <a href="{% url 'create_album' %}">Create Album</a>
                 </li>
                 <li>
-                    <a href="song/create/">Create Song</a>
+                    <a href="{% url 'create_song' %}">Create Song</a>
                 </li>
             </ul>
         </nav>

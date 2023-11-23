@@ -1,8 +1,104 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
+
+from musicApp.music.forms import AlbumCreateForm, AlbumEditForm, AlbumDeleteForm, SongCreateForm
+from musicApp.music.models import Album, Song
 
 
 # Create your views here.
 def index(request):
-    return render(request, 'common/index.html')
+    albums = Album.objects.all()
+
+    context = {
+        'albums': albums
+    }
+
+    return render(request, 'common/index.html', context)
 
 
+
+
+def create_album(request):
+
+    if request.method == 'GET':
+        form = AlbumCreateForm()
+    else:
+        form = AlbumCreateForm(request.POST)
+
+        if form.is_valid():
+            form.save()
+
+            return redirect('index')
+
+    context = {
+        'form': form
+    }
+
+
+    return render(request, 'albums/create-album.html', context)
+
+
+def album_details(request, album_id):
+    album = Album.objects.filter(pk=album_id).get()
+
+    context = {
+        'album': album,
+    }
+
+    return render(request, 'albums/album-details.html', context)
+
+def album_edit(request, album_id):
+    album = Album.objects.filter(pk=album_id).get()
+
+    if request.method == 'GET':
+        form = AlbumEditForm(instance=album)
+    else:
+        form = AlbumEditForm(request.POST, instance=album)
+
+        if form.is_valid():
+            form.save()
+
+            return redirect('index')
+
+    context = {
+        'form': form,
+        'album': album,
+    }
+
+    return render(request, 'albums/edit-album.html', context)
+
+def album_delete(request, album_id):
+    album = Album.objects.filter(pk=album_id).get()
+
+    if request.method == 'GET':
+        form = AlbumEditForm(instance=album)
+
+    else:
+        form = AlbumEditForm(request.POST, instance=album)
+        if form.is_valid():
+            album.delete()
+            return redirect('index')
+
+    context = {
+        'album': album,
+        'form': form
+    }
+
+    return render(request, 'albums/delete-album.html', context)
+
+def create_song(request):
+    if request.method == 'GET':
+        form = SongCreateForm()
+    else:
+        form = SongCreateForm(request.POST)
+
+
+        if form.is_valid():
+
+            return redirect('index')
+
+    context = {
+        'form': form
+    }
+
+
+    return render(request, 'songs/create-song.html', context)

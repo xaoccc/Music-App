@@ -20,22 +20,11 @@ class AlbumDeleteForm(AlbumBaseForm):
         model = Album
         fields = ['name']
 
-class SongBaseForm(forms.Form):
-    song_name = forms.CharField(label='Song Name', max_length=30, required=True)
-    album = forms.ChoiceField(label='Album', choices=[])
 
-    def __init__(self, *args, **kwargs):
-        super(SongBaseForm, self).__init__(*args, **kwargs)
-
-        albums = Album.objects.all()
-        self.fields['album'].choices = [(album.id, album.name) for album in albums]
-
-
-# class SongBaseForm(forms.ModelForm):
-#     album = forms.ModelChoiceField(queryset=Album.objects.values_list('name', flat=True), empty_label="Album name")
-#     class Meta:
-#         model = Album
-#         fields = ['name', 'album']
+class SongBaseForm(forms.ModelForm):
+    class Meta:
+        model = Song
+        fields = ['name', 'album']
 
 class SongCreateForm(SongBaseForm):
     pass

@@ -94,15 +94,7 @@ def create_song(request):
         form = SongCreateForm(request.POST)
 
         if form.is_valid():
-            song_name = form.cleaned_data['song_name']
-            album_id = form.cleaned_data['album']
-
-            # Get the Album object
-            album = Album.objects.get(pk=album_id)
-
-            # Create a new Song object
-            song = Song(name=song_name, album=album)
-            song.save()
+            form.save()
 
             return redirect('index')
 

@@ -8,6 +8,9 @@ class Album(models.Model):
     image_url = models.TextField(max_length=1000)
     price = models.DecimalField(max_digits=5, decimal_places=2)
 
+    def __str__(self):
+        return self.name
+
 
 class Song(models.Model):
     name = models.CharField()

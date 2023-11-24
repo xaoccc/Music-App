@@ -32,7 +32,7 @@ class SongBaseForm(forms.Form):
 
 
 # class SongBaseForm(forms.ModelForm):
-#     album = forms.ModelChoiceField(queryset=Album.objects.values_list('id', flat=True), empty_label="Album name")
+#     album = forms.ModelChoiceField(queryset=Album.objects.values_list('name', flat=True), empty_label="Album name")
 #     class Meta:
 #         model = Album
 #         fields = ['name', 'album']

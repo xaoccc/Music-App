@@ -72,10 +72,10 @@ def album_delete(request, album_id):
     album = Album.objects.filter(pk=album_id).get()
 
     if request.method == 'GET':
-        form = AlbumEditForm(instance=album)
+        form = AlbumDeleteForm(instance=album)
 
     else:
-        form = AlbumEditForm(request.POST, instance=album)
+        form = AlbumDeleteForm(request.POST, instance=album)
         if form.is_valid():
             album.delete()
             return redirect('index')
@@ -93,7 +93,6 @@ def create_song(request):
     else:
         form = SongCreateForm(request.POST)
 
-
         if form.is_valid():
             song_name = form.cleaned_data['song_name']
             album_id = form.cleaned_data['album']
@@ -108,7 +107,7 @@ def create_song(request):
             return redirect('index')
 
     context = {
-        'form': form
+        'form': form,
     }
 
 

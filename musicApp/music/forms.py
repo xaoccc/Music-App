@@ -31,6 +31,7 @@ class SongBaseForm(forms.Form):
         self.fields['album'].choices = [(album.id, album.name) for album in albums]
 
 
-
 class SongCreateForm(SongBaseForm):
     pass
+
+

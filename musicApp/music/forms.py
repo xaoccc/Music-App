@@ -31,6 +31,12 @@ class SongBaseForm(forms.Form):
         self.fields['album'].choices = [(album.id, album.name) for album in albums]
 
 
+# class SongBaseForm(forms.ModelForm):
+#     album = forms.ModelChoiceField(queryset=Album.objects.values_list('id', flat=True), empty_label="Album name")
+#     class Meta:
+#         model = Album
+#         fields = ['name', 'album']
+
 class SongCreateForm(SongBaseForm):
     pass
 
